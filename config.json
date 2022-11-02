@@ -1,0 +1,6 @@
+{
+  "url-backend": "127.0.0.1",
+  "port": 9999,
+  "data-db-connection": "mongodb+srv://jose1:jose1@cluster0.gornqlk.mongodb.net/BD-ciclo4?retryWrites=true&w=majority",
+  "name-db": "BD-ciclo4"
+}
