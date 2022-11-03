@@ -5,10 +5,12 @@ from flask_cors import CORS
 import json
 from waitress import serve
 from controladores.controladorCandidato import ControladorCandidato
+from controladores.controladorPartido import ControladorPartido
 
 app = Flask(__name__)
 cors = CORS(app)
 miControladorCandidato=ControladorCandidato()
+miControladorPartido=ControladorPartido()
 
 def loadFileConfig():
     with open('config.json') as f:
@@ -49,7 +51,34 @@ def eliminarCandidato(id):
     json=miControladorCandidato.delete(id)
     return jsonify(json)
 
+#########################  partido  #########################
 
+@app.route("/Partido",methods=['GET'])
+def getPartido():
+    json=miControladorPartido.index()
+    return jsonify(json)
+
+@app.route("/Partido",methods=['POST'])
+def crearPartido():
+    data = request.get_json()
+    json=miControladorPartido.create(data)
+    return jsonify(json)
+
+@app.route("/Partido/<string:id>",methods=['GET'])
+def getPartido(id):
+    json=miControladorPartido.show(id)
+    return jsonify(json)
+
+@app.route("/Partido/<string:id>",methods=['PUT'])
+def modificarPartido(id):
+    data = request.get_json()
+    json=miControladorPartido.update(id,data)
+    return jsonify(json)
+
+@app.route("/Partido/<string:id>",methods=['DELETE'])
+def eliminarPartido(id):
+    json=miControladorPartido.delete(id)
+    return jsonify(json)
 
 
 
