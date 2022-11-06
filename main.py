@@ -6,11 +6,13 @@ import json
 from waitress import serve
 from controladores.controladorCandidato import ControladorCandidato
 from controladores.controladorPartido import ControladorPartido
+from controladores.controladorResultado import ControladorResultado
 
 app = Flask(__name__)
 cors = CORS(app)
 miControladorCandidato=ControladorCandidato()
 miControladorPartido=ControladorPartido()
+miControladorResultado=ControladorResultado()
 
 def loadFileConfig():
     with open('config.json') as f:
@@ -24,6 +26,7 @@ def test():
     return jsonify(json)
 
 #########################  candidato  #########################
+
 @app.route("/Candidatos",methods=['GET'])
 def getCandidatos():
     json=miControladorCandidato.index()
@@ -76,11 +79,39 @@ def modificarPartido(id):
     return jsonify(json)
 
 @app.route("/Partido/<string:id>",methods=['DELETE'])
+
 def eliminarPartido(id):
     json=miControladorPartido.delete(id)
     return jsonify(json)
 
+#########################  resultado  #########################
 
+@app.route("/Resultado",methods=['GET'])
+def getResultado():
+    json=miControladorResultado.index()
+    return jsonify(json)
+
+@app.route("/Resultado",methods=['POST'])
+def crearResultado(numero_mesa,id_partido):
+    data = request.get_json()
+    json=miControladorResultado.create(data, numero_mesa, id_partido)
+    return jsonify(json)
+
+@app.route("/Resultado/<string:id>",methods=['GET'])
+def getCandidato(id):
+    json=miControladorResultado.show(id)
+    return jsonify(json)
+
+@app.route("/Resultado/<string:id>",methods=['PUT'])
+def modificarResultado(id,numero_mesa,id_partido):
+    data = request.get_json()
+    json=miControladorResultado.update(id,data,numero_mesa,id_partido)
+    return jsonify(json)
+
+@app.route("/Resultado/<string:id>",methods=['DELETE'])
+def eliminarResultado(id):
+    json=miControladorResultado.delete(id)
+    return jsonify(json)
 
 if __name__ == '__main__':
     dataConfig = loadFileConfig()
