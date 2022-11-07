@@ -98,7 +98,7 @@ def crearResultado(numero_mesa,id_partido):
     return jsonify(json)
 
 @app.route("/Resultado/<string:id>",methods=['GET'])
-def getCandidato(id):
+def getResultado(id):
     json=miControladorResultado.show(id)
     return jsonify(json)
 
