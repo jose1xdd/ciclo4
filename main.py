@@ -25,6 +25,11 @@ def test():
     json["message"] = "Server running ..."
     return jsonify(json)
 
+if __name__ == '__main__':
+    dataConfig = loadFileConfig()
+    print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
+    serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
+
 #########################  candidato  #########################
 
 @app.route("/Candidatos",methods=['GET'])
@@ -98,7 +103,7 @@ def crearResultado(numero_mesa,id_partido):
     return jsonify(json)
 
 @app.route("/Resultado/<string:id>",methods=['GET'])
-def getCandidato(id):
+def getResultado(id):
     json=miControladorResultado.show(id)
     return jsonify(json)
 
@@ -113,7 +118,4 @@ def eliminarResultado(id):
     json=miControladorResultado.delete(id)
     return jsonify(json)
 
-if __name__ == '__main__':
-    dataConfig = loadFileConfig()
-    print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
-    serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
+
