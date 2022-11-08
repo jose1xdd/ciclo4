@@ -1,5 +1,7 @@
 from modelos.mesa import Mesa
 from repositorios.repositorioMesa import RepositorioMesa
+
+
 class ControladorMesa():
     def __init__(self):
         self.repositorioMesa = RepositorioMesa()
@@ -10,7 +12,7 @@ class ControladorMesa():
     def create(self, LaMesa):
         nuevaMesa = Mesa(LaMesa)
 
-        return self.repositorioPartido.save(nuevaMesa)
+        return self.repositorioMesa.save(nuevaMesa)
 
     def show(self, id):
         LaMesa = Mesa(self.repositorioMesa.findById(id))
@@ -18,11 +20,10 @@ class ControladorMesa():
         return Mesa.__dict__
 
     def update(self, id, LaMesa):
-        MesaActual = Mesa(self.repositorioPartido.findById(id))
-        MesaActual.id = LaMesa["id"]
-        MesaActual.nombre = LaMesa["nombre"]
-        MesaActual.lema = LaMesa["lema"]
-        return self.repositorioPartido.save(MesaActual)
+        MesaActual = Mesa(self.repositorioMesa.findById(id))
+        MesaActual.id = LaMesa["numero"]
+        MesaActual.nombre = LaMesa["cantidadInscritos"]
+        return self.repositorioMesa.save(MesaActual)
 
     def delete(self, id):
-        return self.repositorioPartido.delete(id)
+        return self.repositorioMesa.delete(id)

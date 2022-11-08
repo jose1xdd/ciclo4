@@ -1,10 +1,14 @@
 from modelos.candidato import Candidato
+from modelos.partido import Partido
 from repositorios.repositoriocandidato import RepositorioCandidato
-
-
+from repositorios.repositoriopartido import RepositorioPartido
+from repositorios.repositorioResultado import RepositorioResultado
+from modelos.resultado import Resultado
 class ControladorCandidato():
     def __init__(self):
         self.repositorioCandidato = RepositorioCandidato()
+        self.repositorioPartido = RepositorioPartido()
+        self.repositorioResultado = RepositorioResultado()
 
     def index(self):
         return self.repositorioCandidato.findAll()
@@ -29,3 +33,10 @@ class ControladorCandidato():
 
     def delete(self, id):
         return self.repositorioCandidato.delete(id)
+
+    def asignarPartido(self, id, id_partido):
+        candidatoActual = Candidato(self.repositorioCandidato.findById(id))
+        partidoActual = Partido(self.repositorioPartido.findById(id_partido))
+        candidatoActual.partido = partidoActual
+        return self.repositorioCandidato.save(candidatoActual)
+
