@@ -70,11 +70,6 @@ def asignarpartido(id, id_partido):
     return jsonify(json)
 
 
-@app.route("/Candidatos/<string:id>/Resultado/<string:id_resultado>", methods=['PUT'])
-def asignarResultado(id, id_resultado):
-    json = miControladorCandidato.asignarPartido(id, id_resultado)
-    return jsonify(json)
-
 
 #########################  partido  #########################
 
@@ -174,4 +169,4 @@ def eliminarMesa(id):
 if __name__ == '__main__':
     dataConfig = loadFileConfig()
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
-    app.run(debug=True)
+    serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
